@@ -28,9 +28,9 @@ export default {
     created() {
         let self = this;
         self.x1 = self.from.x + 25;
-        self.y1 = self.from.y - 25;
+        self.y1 = self.from.y - 50;
         self.x2 = self.to.x + 25;
-        self.y2 = self.to.y - 25;
+        self.y2 = self.to.y - 50;
         self.id = "aresta-" + self.arestaId;
         self.consol();
     },
@@ -42,7 +42,7 @@ export default {
         },
         'from.y'(value) {
             let self = this;
-            self.y1 = self.from.y - 25;
+            self.y1 = self.from.y - 50;
         },
         'to.x'(value) {
             let self = this;
@@ -50,7 +50,7 @@ export default {
         },
         'to.y'(value) {
             let self = this;
-            self.y2 = self.to.y - 25;
+            self.y2 = self.to.y - 50;
         }
     },
 
@@ -77,7 +77,12 @@ export default {
         consol(){
             let self = this;
             var result = prompt("Insira o peso da aresta", "0");
-            self.peso = result;
+            if(isNaN(result)){
+              alert("Insira um número inteiro");
+              self.consol();
+            }else{
+              self.peso = result;
+            }
         }
     },
 

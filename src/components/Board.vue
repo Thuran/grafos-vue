@@ -39,6 +39,9 @@
                 if (self.btnSelected === 7) {
                     self.prim();
                 }
+                if (self.btnSelected === 8) {
+                    self.prim();
+                }
             },
             welshPowell() {
                 var self = this;
@@ -100,7 +103,7 @@
                                             grauVertices[i][0].__vue__.to.color = self.cores[coresUsadas];
                                         }
                                     }
-                                });   
+                                });
                             }
                         }
                     }
@@ -133,7 +136,7 @@
                     listaSaturacao[i] = {id: vertice.id ,saturacao: 0, grau: qtd, cor: 'rgba(219,219,219)'};
                     vertices = [].filter.call(_vertices, v => {
                         return v;
-                    });                    
+                    });
                     i++
                 }, this);
 
@@ -145,7 +148,7 @@
 
                 var listaOriginal = [];
                 listaOriginal = listaSaturacao;
-                
+
                 listaSaturacao.sort((a,b) => {
                     if (a.saturacao < b.saturacao) { return 1; }
                     if (a.saturacao > b.saturacao) { return -1; }
@@ -230,7 +233,7 @@
                     vertices.forEach(vertice => {
                             if(vertice.__vue__.verticeId === satur.id) {
                                 vertice.__vue__.color = satur.cor;
-                            }   
+                            }
                     });
                 });
             },
@@ -272,8 +275,6 @@
                     var i = 0;
                     resultadoVertices.forEach(verticePintado => {
                         q.forEach(verticeNaoPintado => {
-                            var seila = verticeNaoPintado;
-                            var seila2 = verticePintado;
                             var rArestas = [];
                             rArestas = [].filter.call(arestas, a => {
                                 if((a.from.verticeId === verticePintado.id && a.to.verticeId === verticeNaoPintado.id) || (a.to.verticeId === verticePintado.id && a.from.verticeId === verticeNaoPintado.id)){
@@ -281,12 +282,15 @@
                                 }
                             });
                             if(rArestas.length > 0){
-                                var menor = 999999999;
+                                var menor = Number.MAX_SAFE_INTEGER;
+                                // Ordena as arestar
                                 rArestas.sort((a,b) => {
                                     if (parseInt(a.peso) < parseInt(b.peso)) { return -1; }
                                     if (parseInt(a.peso) > parseInt(b.peso)) { return 1; }
                                 });
                                 var pintado, npintado;
+
+                                // define qual é o atual e o que esta comparando
                                 if(verticePintado.id === rArestas[0].from.verticeId){
                                     pintado = rArestas[0].from;
                                     npintado = rArestas[0].to;
@@ -294,16 +298,19 @@
                                     pintado = rArestas[0].to;
                                     npintado = rArestas[0].from;
                                 }
-                                menorAresta[i] = { pintado: pintado, npintado: npintado, aresta: rArestas[0]};
+                                // preenche a lista de arestas do vertice
+                                menorAresta[i] = { pintado, npintado, aresta: rArestas[0]};
                             }
                             i++;
                         });
                     });
                     if(menorAresta.length > 0){
+                        // Ordena para pegar a menor aresta do vertice
                         menorAresta.sort((a,b) => {
                                 if (parseInt(a.aresta.peso) < parseInt(b.aresta.peso)) { return -1; }
                                 if (parseInt(a.aresta.peso) > parseInt(b.aresta.peso)) { return 1; }
                         });
+                        // Adiciona no array de resultados das arestas e dos vertices
                         resultadoArestas.push(menorAresta[0].aresta);
                         resultadoVertices.push(q.splice(q.findIndex((valor, index, array) => {
                             if(menorAresta[0].npintado.verticeId === valor.id){
@@ -313,20 +320,21 @@
                         }),1)[0]);
                     }
                 }
-                console.log(resultadoArestas);
+                // Pinta os vértices
                 resultadoVertices.forEach(rVertice => {
                     [].forEach.call(_vertices, vertice => {
                         if(vertice.__vue__.verticeId === rVertice.id) {
-                                vertice.__vue__.color = 'rgba(123,54,65,80)';
-                        } 
+                                vertice.__vue__.color = 'rgb(110, 244, 66)';
+                        }
                     });
                 })
 
+                // Pinta as arestas
                 resultadoArestas.forEach(rAresta => {
-                    [].forEach.call(_arestas, aresta => {                        
+                    [].forEach.call(_arestas, aresta => {
                         if(aresta.__vue__.from.verticeId === rAresta.from.verticeId && aresta.__vue__.to.verticeId === rAresta.to.verticeId) {
-                            aresta.__vue__.color = 'rgba(123,54,65,80)';
-                        } 
+                            aresta.__vue__.color = 'rgb(110, 244, 66)';
+                        }
                     });
                 })
             },

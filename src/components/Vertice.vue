@@ -14,7 +14,7 @@ export default {
             color: 'rgba(219, 219, 219)',
             backColor: 'rgba(255, 255, 255, 1)'
         }
-    },  
+    },
 
     created(){
         let self = this;
@@ -39,7 +39,7 @@ export default {
             self.backColor = self.color.slice(0,self.color.length-1) + ',0.5)';
         }
     },
-    
+
     props: ['vertice-id', 'pos-x', 'pos-y']
 }
 </script>
